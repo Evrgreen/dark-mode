@@ -11,7 +11,7 @@ const Navbar = () => {
   };
   return (
     <nav className="navbar">
-      <h1>Crypto Tracker</h1>
+      <Link to="/"><h1>Crypto Tracker</h1></Link>
       <Link to="/events">Events</Link>
     
       <div className="dark-mode__toggle">

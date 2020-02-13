@@ -1,39 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-import axios from "axios";
-import {Router,Route,Link} from "@reach/router";
+import { Router } from "@reach/router";
 
 import Charts from "./components/Charts";
 import Navbar from "./components/Navbar";
-import {useDarkMode} from "./hooks/useDarkMode";
-import Events from "./components/Events"
+import { useDarkMode } from "./hooks/useDarkMode";
+import Events from "./components/Events";
+import {useAxios} from "./hooks/useAxios"
 
 import "./styles.scss";
 const App = () => {
-  const [coinData, setCoinData] = useState([]);
   const [darkMode, setDarkMode] = useDarkMode();
- 
-  useEffect(() => {
-    axios
-      .get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true"
-      )
-      .then(res => setCoinData(res.data))
-      .catch(err => console.log(err));
-  }, []);
+  const [coinData] = useAxios("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true")
+  console.log(coinData)
+
+
   return (
-    <div className={darkMode?'App dark-mode':"App"}>
+    <div className={darkMode ? "App dark-mode" : "App"}>
       <button onClick={setDarkMode}>Toggle DarkMode</button>
       <Navbar />
-        
-          <Events path="/events"/>
-          <Charts path="/" coinData={coinData} />
-       
-
- );
+      <Router>
+        <Events path="/events" />
+        <Charts path="/" coinData={coinData} />
+      </Router>
+    </div>
+  );
 };
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App/> , rootElement);
-
-
+ReactDOM.render(<App />, rootElement);
