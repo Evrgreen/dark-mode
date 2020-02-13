@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import {Router,Link} from "@reach/router"
 
 import Events from "./Events";
+import { useDarkMode } from "../hooks/useDarkMode"
+
 
 const Navbar = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useDarkMode();
   const toggleMode = e => {
     e.preventDefault();
     setDarkMode(!darkMode);

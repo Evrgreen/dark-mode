@@ -4,17 +4,19 @@ import axios from "axios";
 // 
 
 
-export const useAxios = (url)=>{
+export const useAxios = (link="")=>{
 
     const [data,setData] = useState([]);
+    const [url,setUrl] = useState(link);
 
-  useEffect(() => {
-    axios
-      .get(url)
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+    useEffect(() => {
+        if(url.length>1)
+          axios
+            .get(url)
+            .then((res) => setData(res.data))
+            .catch((err) => console.log(err));
+    }, [url]);
 
 
-    return[data]
+    return[data,setUrl]
 }
